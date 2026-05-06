@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="CartService.UnitTests/CartService.UnitTests.csproj" Id="9c320155-e813-40b8-aa89-00b8120cc2d8" />
   <Project Path="CartService/CartService.csproj" />
 </Solution>
