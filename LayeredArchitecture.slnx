@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/Task02/">
+    <Project Path="CatalogService.Application/CatalogService.Application.csproj" Id="61ac2ad6-1499-4740-9d9d-d14d618299d7" />
+    <Project Path="CatalogService.Domain/CatalogService.Domain.csproj" Id="c50a754d-74f9-4f64-9bc7-c9fc3de2ca30" />
+    <Project Path="CatalogService.Infrastructure/CatalogService.Infrastructure.csproj" Id="7c8971a0-858e-45ca-a46d-46ef599c2345" />
+  </Folder>
+  <Folder Name="/Task02/CatalogService.Testing/" />
   <Project Path="CartService.IntegrationTests/CartService.IntegrationTests.csproj" Id="3ddcde6f-c535-4226-a8c9-952682e5ed82" />
   <Project Path="CartService.UnitTests/CartService.UnitTests.csproj" Id="9c320155-e813-40b8-aa89-00b8120cc2d8" />
   <Project Path="CartService/CartService.csproj" />
