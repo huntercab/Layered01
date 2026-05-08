@@ -29,6 +29,16 @@ namespace CatalogService.Domain.Entities
             SetImage(image);
         }
 
+        public void Update(string name, int categoryId, Money price, int amount, string? description = null, string? image = null)
+        {
+            SetName(name);
+            SetCategory(categoryId);
+            SetPrice(price);
+            SetAmount(amount);
+            SetDescription(description);
+            SetImage(image);
+        }
+
         private void SetName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

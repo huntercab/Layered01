@@ -9,12 +9,12 @@ namespace CatalogService.Domain.ValueObject
         public decimal Amount { get; private set; }
         public string Currency { get; private set; } = null!;
 
-        public Money()
+        private Money()
         {
             //Required by EF Core
         }
 
-        private Money(decimal amount, string currency)
+        public Money(decimal amount, string currency)
         {
             if (amount < 0)
                 throw new ArgumentException("Amount cannot be negative", nameof(amount));
