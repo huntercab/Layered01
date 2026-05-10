@@ -11,9 +11,23 @@ namespace CatalogService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = configuration.GetConnectionString("CatalogDb");
+
+            if(string.IsNullOrWhiteSpace(connectionString))
+                throw new ArgumentException("Connection String CatalogDb was not found",nameof(connectionString));
+
+            var programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var databaseFolder = Path.Combine(programDataPath,"CatalogService","Data");
+
+            Directory.CreateDirectory(databaseFolder);
+
+            //var databaseFilePath = Path.Combine(databaseFolder, "CatalogServiceDb.mdf");
+
+            //connectionString.Replace("{DbFilePath}", databaseFilePath);//it's not working for migrations
+
             services.AddDbContext<CatalogDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("CatalogDb"));
+                options.UseSqlServer(connectionString);
             });
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();

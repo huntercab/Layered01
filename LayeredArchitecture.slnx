@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Task02/">
     <Project Path="CatalogService.Application/CatalogService.Application.csproj" Id="61ac2ad6-1499-4740-9d9d-d14d618299d7" />
+    <Project Path="CatalogService.ConsoleApp/CatalogService.ConsoleApp.csproj" Id="35516e52-9567-4d67-acbf-0f6067ea841a" />
     <Project Path="CatalogService.Domain/CatalogService.Domain.csproj" Id="c50a754d-74f9-4f64-9bc7-c9fc3de2ca30" />
     <Project Path="CatalogService.Infrastructure/CatalogService.Infrastructure.csproj" Id="7c8971a0-858e-45ca-a46d-46ef599c2345" />
   </Folder>
