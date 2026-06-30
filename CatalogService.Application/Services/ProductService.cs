@@ -1,4 +1,5 @@
-﻿using CatalogService.Application.Interfaces;
+﻿using CatalogService.Application.Common;
+using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
 using CatalogService.Domain.ValueObject;
 
@@ -13,6 +14,20 @@ namespace CatalogService.Application.Services
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;            
+        }
+
+        public async Task<PagedResult<Product>> GetPagedAsync(int? categoryId, int pageNumber, int pageSize)
+        {
+            if (pageNumber <= 0)
+                throw new ArgumentException("Page number must be greater than zero.");
+
+            if (pageSize <= 0 || pageSize > 100)
+                throw new ArgumentException("Page size must be between 1 and 100.");
+
+            if (categoryId.HasValue && categoryId.Value <= 0)
+                throw new ArgumentException("Invalid category id.");
+
+            return await _productRepository.GetPagedAsync(categoryId, pageNumber, pageSize);
         }
 
         public async Task<IReadOnlyList<Product>> GetAllAsync()

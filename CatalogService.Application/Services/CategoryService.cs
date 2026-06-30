@@ -8,10 +8,12 @@ namespace CatalogService.Application.Services
     public class CategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<IReadOnlyList<Category>> GetAllAsync()
@@ -76,13 +78,16 @@ namespace CatalogService.Application.Services
             if (category is null)
                 throw new ArgumentException("Category not found", nameof(category));
 
-            var hasProducts = await _categoryRepository.HasProductsAsync(id);
-            if (hasProducts)
-                throw new ArgumentException("Can not delete a category with active products");
-
             var hasChildren = await _categoryRepository.HasSubCategoriesAsync(id);
             if (hasChildren)
                 throw new ArgumentException("Can not delete a category with subcategories");
+
+            var relatedProducts = await _productRepository.GetByCategoryIdAsync(id);
+
+            foreach (var product in relatedProducts)
+            {
+                await _productRepository.DeleteAsync(product);
+            }
 
             await _categoryRepository.DeleteAsync(category);
         }

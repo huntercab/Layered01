@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CatalogService.Application.Common;
 using CatalogService.Application.Interfaces;
-using CatalogService.Infrastructure.Data;
 using CatalogService.Domain.Entities;
+using CatalogService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatalogService.Infrastructure.Repositories
 {
@@ -13,6 +14,39 @@ namespace CatalogService.Infrastructure.Repositories
         {
             _catalogDbContext = catalogDbContext;
         }
+
+        public async Task<PagedResult<Product>> GetPagedAsync(int? categoryId, int pageNumber, int pageSize)
+        {
+            var query = _catalogDbContext.Products
+                .Include(p => p.Category)
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (categoryId.HasValue)
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Product>(
+                items,
+                pageNumber,
+                pageSize,
+                totalCount);
+        }
+
+        public async Task<IReadOnlyList<Product>> GetByCategoryIdAsync(int categoryId)
+        {
+            return await _catalogDbContext.Products
+                .Where(p => p.CategoryId == categoryId)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Product product)
         {
             await _catalogDbContext.Products.AddAsync(product);

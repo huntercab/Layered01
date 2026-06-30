@@ -1,15 +1,18 @@
 <Solution>
-  <Folder Name="/Task02/">
+  <Folder Name="/CartServiceFolder/">
+    <Project Path="CartService.IntegrationTests/CartService.IntegrationTests.csproj" Id="3ddcde6f-c535-4226-a8c9-952682e5ed82" />
+    <Project Path="CartService.UnitTests/CartService.UnitTests.csproj" Id="9c320155-e813-40b8-aa89-00b8120cc2d8" />
+    <Project Path="CartService/CartService.csproj" />
+  </Folder>
+  <Folder Name="/CatalogServiceFolder/">
+    <Project Path="CatalogService.Api/CatalogService.Api.csproj" Id="9e030f5a-a27c-4b7c-9cc0-2d508dcc5749" />
     <Project Path="CatalogService.Application/CatalogService.Application.csproj" Id="61ac2ad6-1499-4740-9d9d-d14d618299d7" />
     <Project Path="CatalogService.ConsoleApp/CatalogService.ConsoleApp.csproj" Id="35516e52-9567-4d67-acbf-0f6067ea841a" />
     <Project Path="CatalogService.Domain/CatalogService.Domain.csproj" Id="c50a754d-74f9-4f64-9bc7-c9fc3de2ca30" />
     <Project Path="CatalogService.Infrastructure/CatalogService.Infrastructure.csproj" Id="7c8971a0-858e-45ca-a46d-46ef599c2345" />
   </Folder>
-  <Folder Name="/Task02/CatalogService.Testing/">
+  <Folder Name="/CatalogServiceFolder/CatalogService.Testing/">
     <Project Path="CatalogService.IntegrationTests/CatalogService.IntegrationTests.csproj" Id="d85bb690-ee3f-43f5-a180-28e42b78a534" />
     <Project Path="CatalogService.UnitTests/CatalogService.UnitTests.csproj" Id="ffcf66e6-51ca-4e46-9f5c-d50ad870990d" />
   </Folder>
-  <Project Path="CartService.IntegrationTests/CartService.IntegrationTests.csproj" Id="3ddcde6f-c535-4226-a8c9-952682e5ed82" />
-  <Project Path="CartService.UnitTests/CartService.UnitTests.csproj" Id="9c320155-e813-40b8-aa89-00b8120cc2d8" />
-  <Project Path="CartService/CartService.csproj" />
 </Solution>

@@ -1,4 +1,5 @@
-﻿using CatalogService.Domain.Entities;
+﻿using CatalogService.Application.Common;
+using CatalogService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,10 @@ namespace CatalogService.Application.Interfaces
 {
     public interface IProductRepository
     {
+        Task<PagedResult<Product>> GetPagedAsync(int? categoryId, int pageNumber, int pageSize);
+
+        Task<IReadOnlyList<Product>> GetByCategoryIdAsync(int categoryId);
+
         Task<IReadOnlyList<Product>> GetAllAsync();
         Task<Product?> GetByIdAsync(int id);
         Task AddAsync(Product product);
