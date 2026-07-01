@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/CartServiceFolder/">
+    <Project Path="CartService.API/CartService.API.csproj" Id="95270ccf-0ed6-4958-bc1b-0724f8b8ee14" />
     <Project Path="CartService.IntegrationTests/CartService.IntegrationTests.csproj" Id="3ddcde6f-c535-4226-a8c9-952682e5ed82" />
     <Project Path="CartService.UnitTests/CartService.UnitTests.csproj" Id="9c320155-e813-40b8-aa89-00b8120cc2d8" />
     <Project Path="CartService/CartService.csproj" />

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CartService.Business.Interfaces
 {
-    internal interface ICartService
+    public interface ICartService
     {
         Task<IReadOnlyCollection<CartItem>> GetCartItemsAsync(Guid cartId);
         Task AddItemAsync(Guid cartId, CartItem item);
