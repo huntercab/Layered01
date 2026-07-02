@@ -51,7 +51,7 @@ namespace CatalogService.Application.Services
             if (parentCategoryId.HasValue && parentCategoryId.Value == id)
                 throw new ArgumentException("Parent Category and current category can not be the same", nameof(parentCategoryId));
 
-            var category = new Category(name, image, parentCategoryId);
+            var category = await _categoryRepository.GetByIdAsync(id);  // Fetch existing
 
             if(category is null)
                 throw new ArgumentException("Category not found", nameof(category));
