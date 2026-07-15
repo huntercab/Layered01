@@ -1,43 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CartService.DataAccess.Documents;
+﻿using CartService.DataAccess.Documents;
 using CartService.DataAccess.Interfaces;
 using CartService.DataAccess.Mappers;
 using CartService.Domain.Entities;
+using CartService.Domain.ValueObjects;
 using LiteDB;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace CartService.DataAccess.Repositories
 {
     public class LiteDbCartRepository: ICartRepository
     {
         private const string CollectionName = "cart";
-        private readonly string _connectionString;
+        private readonly ILiteDatabase _database;
 
-        public LiteDbCartRepository(string connectionString)
+        public LiteDbCartRepository(ILiteDatabase database)
         {
-            if (string.IsNullOrWhiteSpace(connectionString))
-                throw new ArgumentException("Connection string is required", nameof(connectionString));
-
-            _connectionString = connectionString;
+            _database = database;
         }
 
         public Task<Cart?> GetByIdAsync(Guid cartId)
         {
-            using var database = new LiteDatabase(_connectionString);
-            var collection = database.GetCollection<CartDocument>(CollectionName);
+            var collection = _database.GetCollection<CartDocument>(CollectionName);
 
             var document = collection.FindById(cartId);
 
             return Task.FromResult(document is null ? null : CartMapper.ToDomain(document));
         }
 
+        public Task UpdateProductInAllCartsAsync(int productId, string name, Money price, ImageInfo? image)
+        {
+            var collection = _database.GetCollection<CartDocument>(CollectionName);
+
+            var documents = collection.FindAll().ToList();
+
+            foreach (var document in documents)
+            {
+                Cart cart = CartMapper.ToDomain(document);
+
+                CartItem? item = cart.Items
+                    .FirstOrDefault(x => x.Id == productId);
+
+                if (item is null)
+                    continue;
+
+                item.SynchronizeCatalogData(
+                    name,
+                    price,
+                    image);
+
+                collection.Update(
+                    CartMapper.ToDocument(cart));
+            }
+
+            return Task.CompletedTask;
+        }
+
         public Task SaveAsync(Cart cart) 
         { 
             ArgumentNullException.ThrowIfNull(cart);
 
-            using var database = new LiteDatabase(_connectionString);
-            var collection = database.GetCollection<CartDocument>(CollectionName);
+            var collection = _database.GetCollection<CartDocument>(CollectionName);
 
             var document = CartMapper.ToDocument(cart);
 

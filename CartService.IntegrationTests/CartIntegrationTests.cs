@@ -2,24 +2,33 @@
 using CartService.DataAccess.Repositories;
 using CartService.Domain.Entities;
 using CartService.Domain.ValueObjects;
+using LiteDB;
 using Xunit;
 
 namespace CartService.IntegrationTests
 {
-    public class CartIntegrationTests
+    public class CartIntegrationTests : IDisposable
     {
         private readonly string _databaseFilePath;
+        private readonly ILiteDatabase _database;
         private readonly LiteDbCartRepository _cartRepository;
         private readonly Business.Services.CartService _cartService;
 
         public CartIntegrationTests()
         {
-            _databaseFilePath = Path.Combine(Path.GetTempPath(),$"{Guid.NewGuid()}.db");
+            _databaseFilePath = Path.Combine(
+                Path.GetTempPath(),
+                $"{Guid.NewGuid()}.db");
 
-            var connectionString = $"Filename={_databaseFilePath};Connection=shared";
+            var connectionString =
+                $"Filename={_databaseFilePath};Connection=shared";
 
-            _cartRepository = new LiteDbCartRepository(connectionString);
-            _cartService = new Business.Services.CartService(_cartRepository);
+            _database = new LiteDatabase(connectionString);
+
+            _cartRepository = new LiteDbCartRepository(_database);
+
+            _cartService =
+                new Business.Services.CartService(_cartRepository);
         }
 
         [Fact]
@@ -112,9 +121,18 @@ namespace CartService.IntegrationTests
 
         public void Dispose()
         {
+            _database.Dispose();
+
             if (File.Exists(_databaseFilePath))
             {
                 File.Delete(_databaseFilePath);
+            }
+
+            var logFilePath = _databaseFilePath + "-log";
+
+            if (File.Exists(logFilePath))
+            {
+                File.Delete(logFilePath);
             }
         }
     }

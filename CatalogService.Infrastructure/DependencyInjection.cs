@@ -30,6 +30,10 @@ namespace CatalogService.Infrastructure
                 options.UseSqlServer(connectionString);
             });
 
+
+            services.AddScoped<ICatalogDbContext>(provider =>
+                provider.GetRequiredService<CatalogDbContext>());
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
 

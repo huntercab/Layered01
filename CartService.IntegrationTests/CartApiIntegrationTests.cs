@@ -1,13 +1,15 @@
 ﻿using CartService.API.Contracts;
+using CartService.DataAccess.Interfaces;
+using CartService.DataAccess.Repositories;
+using LiteDB;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using CartService.DataAccess.Interfaces;
-using CartService.DataAccess.Repositories;
 
 namespace CartService.IntegrationTests
 {
@@ -18,52 +20,65 @@ namespace CartService.IntegrationTests
         {
             var databasePath = Path.Combine(
                 Path.GetTempPath(),
-                $"{Guid.NewGuid()}.db"
-            );
+                $"{Guid.NewGuid()}.db");
 
-            await using var factory = new WebApplicationFactory<Program>()
-                .WithWebHostBuilder(builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        var existingRepository = services
-                            .SingleOrDefault(x => x.ServiceType == typeof(ICartRepository));
+            var connectionString =
+                $"Filename={databasePath};Connection=shared";
 
-                        if (existingRepository is not null)
+            try
+            {
+                await using var factory =
+                    new WebApplicationFactory<Program>()
+                        .WithWebHostBuilder(builder =>
                         {
-                            services.Remove(existingRepository);
-                        }
+                            builder.ConfigureServices(services =>
+                            {
+                                services.RemoveAll<ILiteDatabase>();
+                                services.RemoveAll<ICartRepository>();
 
-                        services.AddScoped<ICartRepository>(_ =>
-                            new LiteDbCartRepository(
-                                $"Filename={databasePath};Connection=shared"
-                            ));
-                    });
-                });
+                                services.AddSingleton<ILiteDatabase>(
+                                    _ => new LiteDatabase(connectionString));
 
-            var client = factory.CreateClient();
+                                services.AddScoped<
+                                    ICartRepository,
+                                    LiteDbCartRepository>();
+                            });
+                        });
 
-            var cartKey = Guid.NewGuid().ToString();
+                using var client = factory.CreateClient();
 
-            var request = new CartItemRequest
+                var cartKey = Guid.NewGuid();
+
+                var request = new CartItemRequest
+                {
+                    Id = 1,
+                    Name = "Keyboard",
+                    PriceAmount = 50,
+                    PriceCurrency = "USD",
+                    Quantity = 2
+                };
+
+                var response = await client.PostAsJsonAsync(
+                    $"/api/v1/carts/{cartKey}/items",
+                    request);
+
+                Assert.Equal(
+                    HttpStatusCode.OK,
+                    response.StatusCode);
+            }
+            finally
             {
-                Id = 1,
-                Name = "Keyboard",
-                PriceAmount = 50,
-                PriceCurrency = "USD",
-                Quantity = 2
-            };
+                if (File.Exists(databasePath))
+                {
+                    File.Delete(databasePath);
+                }
 
-            var response = await client.PostAsJsonAsync(
-                $"/api/v1/carts/{cartKey}/items",
-                request
-            );
+                var logFilePath = databasePath + "-log";
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-            if (File.Exists(databasePath))
-            {
-                File.Delete(databasePath);
+                if (File.Exists(logFilePath))
+                {
+                    File.Delete(logFilePath);
+                }
             }
         }
     }

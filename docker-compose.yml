@@ -1,0 +1,26 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: mentoring-rabbitmq
+    hostname: rabbitmq
+    restart: unless-stopped
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    environment:
+      RABBITMQ_DEFAULT_USER: mentoring
+      RABBITMQ_DEFAULT_PASS: mentoring-password
+
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  rabbitmq-data:

@@ -1,7 +1,11 @@
+using CartService.Business.CatalogEvents;
 using CartService.Business.Interfaces;
 using CartService.DataAccess.Interfaces;
+using CartService.DataAccess.Messaging;
 using CartService.DataAccess.Repositories;
+using LiteDB;
 using Microsoft.OpenApi;
+using Shared.Messaging.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +13,31 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ICartService, CartService.Business.Services.CartService>();
 
-builder.Services.AddScoped<ICartRepository>(_ =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("CartDatabase")
-        ?? "Filename=cart.db;Connection=shared";
+var connectionString =
+    builder.Configuration.GetConnectionString("CartDatabase")
+    ?? "Filename=cart.db;Connection=shared";
 
-    return new LiteDbCartRepository(connectionString);
-});
+Console.WriteLine($"LiteDB connection: {connectionString}");
+Console.WriteLine($"LiteDB file path: {Path.GetFullPath("cart.db")}");
+
+builder.Services.AddSingleton<ILiteDatabase>(
+    _ => new LiteDatabase(connectionString));
+
+
+// RabbitMQ configuration
+builder.Services.AddRabbitMqMessaging(
+    builder.Configuration);
+
+builder.Services.AddScoped<ProductUpdatedEventHandler>();
+
+builder.Services.AddScoped<ICartRepository,
+    LiteDbCartRepository>();
+
+builder.Services.AddScoped<IInboxRepository,
+    LiteDbInboxRepository>();
+
+builder.Services.AddHostedService<ProductUpdatedConsumer>();
+//////////////////
 
 builder.Services.AddEndpointsApiExplorer();
 

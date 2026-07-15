@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
+using CatalogService.Domain.Outbox;
+using Microsoft.EntityFrameworkCore;
 
 namespace CatalogService.Infrastructure.Data
 {
-    public class CatalogDbContext: DbContext
+    public class CatalogDbContext: DbContext, ICatalogDbContext
     {
         public CatalogDbContext(DbContextOptions<CatalogDbContext> options): base(options) 
         { 
@@ -11,6 +13,8 @@ namespace CatalogService.Infrastructure.Data
 
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Product> Products => Set<Product>();
+
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

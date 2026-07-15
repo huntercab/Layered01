@@ -9,14 +9,16 @@ namespace CatalogService.UnitTests
     {
         private readonly Mock<IProductRepository> _productRepositoryMock;
         private readonly Mock<ICategoryRepository> _categoryRepositoryMock;
+        private readonly Mock<ICatalogDbContext> _catalogDbContextMock;
         private readonly ProductService _productService;
 
         public ProductServiceTests()
         {
             _productRepositoryMock = new Mock<IProductRepository>();
             _categoryRepositoryMock = new Mock<ICategoryRepository>();
+            _catalogDbContextMock = new Mock<ICatalogDbContext>();
 
-            _productService = new ProductService(_categoryRepositoryMock.Object, _productRepositoryMock.Object);
+            _productService = new ProductService(_categoryRepositoryMock.Object, _productRepositoryMock.Object, _catalogDbContextMock.Object);
         }
 
 

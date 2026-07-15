@@ -16,4 +16,8 @@
     <Project Path="CatalogService.IntegrationTests/CatalogService.IntegrationTests.csproj" Id="d85bb690-ee3f-43f5-a180-28e42b78a534" />
     <Project Path="CatalogService.UnitTests/CatalogService.UnitTests.csproj" Id="ffcf66e6-51ca-4e46-9f5c-d50ad870990d" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="Shared.Messaging/Shared.Messaging.csproj" Id="bb547671-2542-4ec2-be89-4cab826d821b" />
 </Solution>

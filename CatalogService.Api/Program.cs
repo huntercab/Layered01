@@ -1,10 +1,16 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using CatalogService.Application;
+using CatalogService.Application.Interfaces;
+using CatalogService.Infrastructure;
+using CatalogService.Infrastructure.Data;
+using CatalogService.Infrastructure.Outbox;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
+using Shared.Messaging.Abstractions;
+using Shared.Messaging.RabbitMQ;
+using Shared.Messaging.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using CatalogService.Application;
-using CatalogService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +18,16 @@ builder.Services.AddControllers();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// RabbitMQ configuration
+builder.Services.AddRabbitMqMessaging(
+    builder.Configuration);
+
+builder.Services.AddScoped<IIntegrationEventPublisher,
+    RabbitMqIntegrationEventPublisher>();
+
+builder.Services.AddHostedService<OutboxPublisherWorker>();
+//////////////////
 
 builder.Services
     .AddApiVersioning(options =>

@@ -1,7 +1,10 @@
 ﻿using CatalogService.Application.Common;
 using CatalogService.Application.Interfaces;
 using CatalogService.Domain.Entities;
+using CatalogService.Domain.Outbox;
 using CatalogService.Domain.ValueObject;
+using Shared.Messaging.Contracts;
+using System.Text.Json;
 
 namespace CatalogService.Application.Services
 {
@@ -9,11 +12,13 @@ namespace CatalogService.Application.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICatalogDbContext _dbContext;
 
-        public ProductService(ICategoryRepository categoryRepository, IProductRepository productRepository)
+        public ProductService(ICategoryRepository categoryRepository, IProductRepository productRepository, ICatalogDbContext dbContext)
         {
             _categoryRepository = categoryRepository;
-            _productRepository = productRepository;            
+            _productRepository = productRepository;
+            _dbContext = dbContext;
         }
 
         public async Task<PagedResult<Product>> GetPagedAsync(int? categoryId, int pageNumber, int pageSize)
@@ -76,6 +81,25 @@ namespace CatalogService.Application.Services
 
             product.Update(name, categoryId, price, amount, description, image);
             await _productRepository.UpdateAsync(product);
+
+            var integrationEvent = new ProductUpdatedIntegrationEvent(
+            MessageId: Guid.NewGuid(),
+            ProductId: product.Id,
+            Name: product.Name,
+            PriceAmount: product.Price.Amount,
+            Currency: product.Price.Currency,
+            Image: product.Image,
+            OccurredOnUtc: DateTimeOffset.UtcNow);
+
+            var outboxMessage = new OutboxMessage(
+                id: integrationEvent.MessageId,
+                type: nameof(ProductUpdatedIntegrationEvent),
+                content: JsonSerializer.Serialize(integrationEvent),
+                occurredOnUtc: integrationEvent.OccurredOnUtc);
+
+            _dbContext.OutboxMessages.Add(outboxMessage);
+
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
