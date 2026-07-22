@@ -20,4 +20,5 @@
     <File Path="docker-compose.yml" />
   </Folder>
   <Project Path="Shared.Messaging/Shared.Messaging.csproj" Id="bb547671-2542-4ec2-be89-4cab826d821b" />
+  <Project Path="Shared/Shared.csproj" Id="25250ebf-2f59-4ee8-9931-59f2483a7228" />
 </Solution>

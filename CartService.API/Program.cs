@@ -1,11 +1,16 @@
+using CartService.API.Middleware;
 using CartService.Business.CatalogEvents;
 using CartService.Business.Interfaces;
 using CartService.DataAccess.Interfaces;
 using CartService.DataAccess.Messaging;
 using CartService.DataAccess.Repositories;
 using LiteDB;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi;
+using Shared.Authorization;
 using Shared.Messaging.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +60,50 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
+// Authentication and Authorization
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(
+        jwtOptions =>
+        {
+            builder.Configuration.Bind("AzureAd", jwtOptions);
+
+            // Preserve Entra claim names such as "roles", "sub" and "oid".
+            jwtOptions.MapInboundClaims = false;
+            jwtOptions.TokenValidationParameters.RoleClaimType = "roles";
+        },
+        identityOptions =>
+        {
+            builder.Configuration.Bind("AzureAd", identityOptions);
+        });
+
+        builder.Services.AddAuthorization(options =>
+        {
+        options.AddPolicy(StorePolicies.Read, policy =>
+            policy.RequireAuthenticatedUser()
+                    .RequireRole(
+                        StoreRoles.Manager,
+                        StoreRoles.StoreCustomer));
+
+        options.AddPolicy(StorePolicies.Create, policy =>
+            policy.RequireAuthenticatedUser()
+                    .RequireRole(StoreRoles.Manager));
+
+        options.AddPolicy(StorePolicies.Update, policy =>
+            policy.RequireAuthenticatedUser()
+                    .RequireRole(StoreRoles.Manager));
+
+        options.AddPolicy(StorePolicies.Delete, policy =>
+            policy.RequireAuthenticatedUser()
+                    .RequireRole(StoreRoles.Manager));
+
+        options.AddPolicy(StorePolicies.CartAccess, policy =>
+            policy.RequireAuthenticatedUser()
+                    .RequireRole(
+                        StoreRoles.Manager,
+                        StoreRoles.StoreCustomer));
+        });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -68,7 +117,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseMiddleware<IdentityAccessTokenLoggingMiddleware>();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

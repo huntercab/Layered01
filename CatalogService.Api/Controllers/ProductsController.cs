@@ -2,7 +2,9 @@
 using CatalogService.Api.Contracts;
 using CatalogService.Application.Services;
 using CatalogService.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Authorization;
 
 namespace CatalogService.Api.Controllers
 {
@@ -19,6 +21,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = StorePolicies.Read)]
         public async Task<ActionResult<PagedResponse<ProductResponse>>> GetPaged(
             [FromQuery] int? categoryId,
             [FromQuery] int pageNumber = 1,
@@ -51,6 +54,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetProductById")]
+        [Authorize(Policy = StorePolicies.Read)]
         public async Task<ActionResult<ProductResponse>> GetById(int id)
         {
             var product = await _productService.GetByIdAsync(id);
@@ -62,6 +66,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = StorePolicies.Create)]
         public async Task<IActionResult> Create(CreateProductRequest request)
         {
             await _productService.AddAsync(
@@ -77,6 +82,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Policy = StorePolicies.Update)]
         public async Task<IActionResult> Update(
             int id,
             UpdateProductRequest request)
@@ -95,6 +101,7 @@ namespace CatalogService.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = StorePolicies.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteAsync(id);

@@ -1,12 +1,15 @@
 ﻿using CartService.API.Contracts;
 using CartService.API.Mappers;
 using CartService.Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Authorization;
 
 namespace CartService.API.Controllers.V2
 {
     [ApiController]
     [Route("api/v2/carts")]
+    [Authorize(Policy = StorePolicies.CartAccess)]
     public sealed class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
