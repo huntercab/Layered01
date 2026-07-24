@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Running pre-push validation..."
+
+REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPOSITORY_ROOT"
+
+if ! command -v dotnet >/dev/null 2>&1; then
+    echo "ERROR: The .NET SDK is not installed or is not available in PATH."
+    exit 1
+fi
+
+echo "Using .NET SDK:"
+dotnet --version
+
+# Add or modify solution paths here.
+SOLUTIONS=(
+    "CartService/CartService.sln"
+    "CatalogService/CatalogService.sln"
+)
+
+# These rules remain warnings in .editorconfig, but are treated as errors
+# only during pre-push validation.
+VALIDATED_WARNINGS="IDE0005;IDE0055;IDE0065;CA1502;MA0032;MA0155"
+
+for solution in "${SOLUTIONS[@]}"; do
+    if [[ ! -f "$solution" ]]; then
+        echo "ERROR: Solution not found: $solution"
+        exit 1
+    fi
+
+    echo ""
+    echo "Restoring $solution..."
+    dotnet restore "$solution" --nologo
+
+    echo "Checking formatting for $solution..."
+    dotnet format "$solution" \
+        --verify-no-changes \
+        --severity info \
+        --no-restore \
+        --verbosity minimal
+
+    echo "Checking analyzer rules for $solution..."
+    dotnet build "$solution" \
+        --configuration Release \
+        --no-restore \
+        --nologo \
+        "-warnaserror:$VALIDATED_WARNINGS"
+done
+
+echo ""
+echo "Pre-push validation succeeded."
+exit 0
