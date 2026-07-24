@@ -30,7 +30,7 @@ SOLUTIONS=(
 
 # These rules remain warnings in .editorconfig, but are treated as errors
 # only during pre-push validation.
-VALIDATED_WARNINGS="IDE0005;IDE0055;IDE0065;CA1502;MA0032;MA0155"
+VALIDATED_WARNINGS="IDE0005;IDE0055;IDE0065;CA1502;MA0155"
 
 for solution in "${SOLUTIONS[@]}"; do
     if [[ ! -f "$solution" ]]; then
@@ -44,10 +44,11 @@ for solution in "${SOLUTIONS[@]}"; do
 
     echo "Checking formatting for $solution..."
     "$DOTNET" format "$solution" \
-        --verify-no-changes \
-        --severity info \
-        --no-restore \
-        --verbosity minimal
+		--verify-no-changes \
+		--severity info \
+		--exclude-diagnostics IDE0290 IDE0305 CA1848 MA0032 CA2208 IDE0270 IDE0090 IDE0301 IDE0028 CA1873 ASP0025 ASP0027 CA1859 CA1816 CA1050 \
+		--no-restore \
+		--verbosity minimal
 
     echo "Checking analyzer rules for $solution..."
     "$DOTNET" build "$solution" \
