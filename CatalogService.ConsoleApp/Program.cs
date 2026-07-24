@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+using CatalogService.Application;
+using CatalogService.Application.Services;
+using CatalogService.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CatalogService.Application;
-using CatalogService.Infrastructure;
-using CatalogService.Application.Services;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((context, config) =>
@@ -39,7 +39,7 @@ try
         Console.WriteLine($"{product.Id} - {product.Name}");
     }
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.WriteLine(ex.ToString());
 }

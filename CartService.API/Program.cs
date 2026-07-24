@@ -7,7 +7,6 @@ using CartService.DataAccess.Repositories;
 using LiteDB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
-using Microsoft.OpenApi;
 using Shared.Authorization;
 using Shared.Messaging.DependencyInjection;
 
@@ -77,27 +76,27 @@ builder.Services
             builder.Configuration.Bind("AzureAd", identityOptions);
         });
 
-        builder.Services.AddAuthorization(options =>
+builder.Services.AddAuthorization(options =>
         {
-        options.AddPolicy(StorePolicies.Read, policy =>
+            options.AddPolicy(StorePolicies.Read, policy =>
             policy.RequireAuthenticatedUser()
                     .RequireRole(
                         StoreRoles.Manager,
                         StoreRoles.StoreCustomer));
 
-        options.AddPolicy(StorePolicies.Create, policy =>
+            options.AddPolicy(StorePolicies.Create, policy =>
             policy.RequireAuthenticatedUser()
                     .RequireRole(StoreRoles.Manager));
 
-        options.AddPolicy(StorePolicies.Update, policy =>
+            options.AddPolicy(StorePolicies.Update, policy =>
             policy.RequireAuthenticatedUser()
                     .RequireRole(StoreRoles.Manager));
 
-        options.AddPolicy(StorePolicies.Delete, policy =>
+            options.AddPolicy(StorePolicies.Delete, policy =>
             policy.RequireAuthenticatedUser()
                     .RequireRole(StoreRoles.Manager));
 
-        options.AddPolicy(StorePolicies.CartAccess, policy =>
+            options.AddPolicy(StorePolicies.CartAccess, policy =>
             policy.RequireAuthenticatedUser()
                     .RequireRole(
                         StoreRoles.Manager,

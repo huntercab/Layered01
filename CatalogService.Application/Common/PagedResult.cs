@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CatalogService.Application.Common
+namespace CatalogService.Application.Common;
+
+public class PagedResult<T>
 {
-    public class PagedResult<T>
+    public IReadOnlyList<T> Items { get; }
+
+    public int PageNumber { get; }
+
+    public int PageSize { get; }
+
+    public int TotalCount { get; }
+
+    public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
+
+    public PagedResult(
+        IReadOnlyList<T> items,
+        int pageNumber,
+        int pageSize,
+        int totalCount)
     {
-        public IReadOnlyList<T> Items { get; }
-
-        public int PageNumber { get; }
-
-        public int PageSize { get; }
-
-        public int TotalCount { get; }
-
-        public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
-
-        public PagedResult(
-            IReadOnlyList<T> items,
-            int pageNumber,
-            int pageSize,
-            int totalCount)
-        {
-            Items = items;
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            TotalCount = totalCount;
-        }
+        Items = items;
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+        TotalCount = totalCount;
     }
 }

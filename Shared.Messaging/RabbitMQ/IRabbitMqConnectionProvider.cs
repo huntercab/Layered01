@@ -1,13 +1,9 @@
-﻿using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using RabbitMQ.Client;
 
-namespace Shared.Messaging.RabbitMQ
+namespace Shared.Messaging.RabbitMQ;
+
+public interface IRabbitMqConnectionProvider : IAsyncDisposable
 {
-    public interface IRabbitMqConnectionProvider : IAsyncDisposable
-    {
-        Task<IConnection> GetConnectionAsync(
-            CancellationToken cancellationToken = default);
-    }
+    Task<IConnection> GetConnectionAsync(
+        CancellationToken cancellationToken = default);
 }

@@ -1,83 +1,79 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using Shared.Messaging.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Shared.Messaging.RabbitMQ
+namespace Shared.Messaging.RabbitMQ;
+
+public sealed class RabbitMqConnectionProvider
+: IRabbitMqConnectionProvider
 {
-    public sealed class RabbitMqConnectionProvider
-    : IRabbitMqConnectionProvider
+    private readonly ConnectionFactory _connectionFactory;
+    private readonly SemaphoreSlim _lock = new(1, 1);
+
+    private IConnection? _connection;
+
+    public RabbitMqConnectionProvider(
+        IOptions<RabbitMqOptions> options)
     {
-        private readonly ConnectionFactory _connectionFactory;
-        private readonly SemaphoreSlim _lock = new(1, 1);
+        RabbitMqOptions settings = options.Value;
 
-        private IConnection? _connection;
-
-        public RabbitMqConnectionProvider(
-            IOptions<RabbitMqOptions> options)
+        _connectionFactory = new ConnectionFactory
         {
-            RabbitMqOptions settings = options.Value;
+            HostName = settings.HostName,
+            Port = settings.Port,
+            UserName = settings.UserName,
+            Password = settings.Password,
+            VirtualHost = settings.VirtualHost,
 
-            _connectionFactory = new ConnectionFactory
-            {
-                HostName = settings.HostName,
-                Port = settings.Port,
-                UserName = settings.UserName,
-                Password = settings.Password,
-                VirtualHost = settings.VirtualHost,
+            AutomaticRecoveryEnabled = true,
+            TopologyRecoveryEnabled = true,
 
-                AutomaticRecoveryEnabled = true,
-                TopologyRecoveryEnabled = true,
+            ClientProvidedName =
+                $"{Environment.MachineName}-{AppDomain.CurrentDomain.FriendlyName}"
+        };
+    }
 
-                ClientProvidedName =
-                    $"{Environment.MachineName}-{AppDomain.CurrentDomain.FriendlyName}"
-            };
+    public async Task<IConnection> GetConnectionAsync(
+        CancellationToken cancellationToken = default)
+    {
+        if (_connection is { IsOpen: true })
+        {
+            return _connection;
         }
 
-        public async Task<IConnection> GetConnectionAsync(
-            CancellationToken cancellationToken = default)
+        await _lock.WaitAsync(cancellationToken);
+
+        try
         {
             if (_connection is { IsOpen: true })
             {
                 return _connection;
             }
 
-            await _lock.WaitAsync(cancellationToken);
-
-            try
-            {
-                if (_connection is { IsOpen: true })
-                {
-                    return _connection;
-                }
-
-                if (_connection is not null)
-                {
-                    await _connection.DisposeAsync();
-                }
-
-                _connection =
-                    await _connectionFactory.CreateConnectionAsync(
-                        cancellationToken);
-
-                return _connection;
-            }
-            finally
-            {
-                _lock.Release();
-            }
-        }
-
-        public async ValueTask DisposeAsync()
-        {
             if (_connection is not null)
             {
                 await _connection.DisposeAsync();
             }
 
-            _lock.Dispose();
+            _connection =
+                await _connectionFactory.CreateConnectionAsync(
+                    cancellationToken);
+
+            return _connection;
         }
+        finally
+        {
+            _lock.Release();
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_connection is not null)
+        {
+            await _connection.DisposeAsync();
+        }
+
+        _lock.Dispose();
     }
 }

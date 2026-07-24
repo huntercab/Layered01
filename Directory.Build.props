@@ -1,0 +1,38 @@
+<Project>
+    <PropertyGroup>
+        <!-- Use the recommended analyzer rules supplied with .NET 10. -->
+        <AnalysisLevel>10.0-recommended</AnalysisLevel>
+
+        <!-- Run IDE/code-style diagnostics during dotnet build. -->
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+        <!-- A warning must be fixed before the project can build. -->
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+		<WarningsNotAsErrors>
+			$(WarningsNotAsErrors);
+			CA1502;
+			MA0032;
+			MA0155;
+			NU1903;
+			IDE0008
+		</WarningsNotAsErrors>
+
+        <!-- Enable Meziantou rules individually in .editorconfig. -->
+        <MeziantouAnalysisMode>None</MeziantouAnalysisMode>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Meziantou.Analyzer"
+                          Version="3.0.125">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>
+                runtime;
+                build;
+                native;
+                contentfiles;
+                analyzers
+            </IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

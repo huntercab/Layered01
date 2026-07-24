@@ -1,8 +1,7 @@
-﻿namespace CartService.API.Contracts
+namespace CartService.API.Contracts;
+
+public sealed class ImageRequest
 {
-    public sealed class ImageRequest
-    {
-        public string Url { get; set; } = string.Empty;
-        public string AltText { get; set; } = string.Empty;
-    }
+    public string Url { get; set; } = string.Empty;
+    public string AltText { get; set; } = string.Empty;
 }

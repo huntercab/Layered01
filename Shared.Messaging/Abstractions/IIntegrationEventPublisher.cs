@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+namespace Shared.Messaging.Abstractions;
 
-namespace Shared.Messaging.Abstractions
+public interface IIntegrationEventPublisher
 {
-    public interface IIntegrationEventPublisher
-    {
-        Task PublishProductUpdatedAsync(
-            string body,
-            Guid messageId,
-            CancellationToken cancellationToken = default);
-    }
+    Task PublishProductUpdatedAsync(
+        string body,
+        Guid messageId,
+        CancellationToken cancellationToken = default);
 }

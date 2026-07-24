@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CartService.Domain.ValueObjects
+namespace CartService.Domain.ValueObjects;
+
+public class Money
 {
-    public class Money
+    public decimal Amount { get; }
+    public string Currency { get; }
+
+    private Money(decimal amount, string currency)
     {
-        public decimal Amount { get; }
-        public string Currency { get; }
+        Amount = amount;
+        Currency = currency;
+    }
 
-        private Money(decimal amount, string currency) 
+    public static Money Create(decimal amount, string currency)
+    {
+        if (amount < 0)
         {
-            Amount = amount;
-            Currency = currency;
+            throw new ArgumentException("Amount cannot be negative", nameof(amount));
         }
 
-        public static Money Create(decimal amount, string currency)
+        if (string.IsNullOrWhiteSpace(currency))
         {
-            if (amount < 0)
-                throw new ArgumentException("Amount cannot be negative", nameof(amount));
-
-            if (string.IsNullOrWhiteSpace(currency))
-                throw new ArgumentException("Currency is required", nameof(currency));
-
-            currency = currency.Trim().ToUpperInvariant();
-
-            if (currency.Length != 3)
-                throw new ArgumentException("Expecting ISO format", nameof(currency));
-
-            return new Money(amount, currency);
+            throw new ArgumentException("Currency is required", nameof(currency));
         }
+
+        currency = currency.Trim().ToUpperInvariant();
+
+        return currency.Length != 3 ? throw new ArgumentException("Expecting ISO format", nameof(currency)) : new Money(amount, currency);
     }
 }

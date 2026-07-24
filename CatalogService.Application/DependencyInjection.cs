@@ -1,16 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
 using CatalogService.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace CatalogService.Application
+namespace CatalogService.Application;
+
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
-        {
-            services.AddScoped<CategoryService>();
-            services.AddScoped<ProductService>();
+        services.AddScoped<CategoryService>();
+        services.AddScoped<ProductService>();
 
-            return services;
-        }
+        return services;
     }
 }

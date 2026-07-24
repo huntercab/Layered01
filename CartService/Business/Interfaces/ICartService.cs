@@ -1,14 +1,10 @@
-﻿using CartService.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CartService.Domain.Entities;
 
-namespace CartService.Business.Interfaces
+namespace CartService.Business.Interfaces;
+
+public interface ICartService
 {
-    public interface ICartService
-    {
-        Task<IReadOnlyCollection<CartItem>> GetCartItemsAsync(Guid cartId);
-        Task AddItemAsync(Guid cartId, CartItem item);
-        Task RemoveItemAsync(Guid cartId, int ItemId);
-    }
+    Task<IReadOnlyCollection<CartItem>> GetCartItemsAsync(Guid cartId);
+    Task AddItemAsync(Guid cartId, CartItem item);
+    Task RemoveItemAsync(Guid cartId, int ItemId);
 }

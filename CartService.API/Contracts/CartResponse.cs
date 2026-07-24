@@ -1,8 +1,7 @@
-﻿namespace CartService.API.Contracts
+namespace CartService.API.Contracts;
+
+public sealed class CartResponse
 {
-    public sealed class CartResponse
-    {
-        public string CartKey { get; set; } = string.Empty;
-        public IReadOnlyCollection<CartItemResponse> Items { get; set; } = [];
-    }
+    public string CartKey { get; set; } = string.Empty;
+    public IReadOnlyCollection<CartItemResponse> Items { get; set; } = [];
 }

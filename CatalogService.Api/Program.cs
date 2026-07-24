@@ -1,19 +1,17 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using CatalogService.Application;
-using CatalogService.Application.Interfaces;
 using CatalogService.Infrastructure;
-using CatalogService.Infrastructure.Data;
 using CatalogService.Infrastructure.Outbox;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi;
+using Shared.Authorization;
 using Shared.Messaging.Abstractions;
 using Shared.Messaging.DependencyInjection;
 using Shared.Messaging.RabbitMQ;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Identity.Web;
-using Shared.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 

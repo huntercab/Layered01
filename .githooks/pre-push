@@ -7,18 +7,25 @@ echo "Running pre-push validation..."
 REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPOSITORY_ROOT"
 
-if ! command -v dotnet >/dev/null 2>&1; then
-    echo "ERROR: The .NET SDK is not installed or is not available in PATH."
+# Git Bash may not inherit the same PATH as PowerShell or Visual Studio.
+export PATH="/c/Program Files/dotnet:$PATH"
+
+if command -v dotnet >/dev/null 2>&1; then
+    DOTNET="dotnet"
+elif [[ -x "/c/Program Files/dotnet/dotnet.exe" ]]; then
+    DOTNET="/c/Program Files/dotnet/dotnet.exe"
+else
+    echo "ERROR: The .NET SDK could not be found."
+    echo "Expected location: C:\\Program Files\\dotnet\\dotnet.exe"
     exit 1
 fi
 
 echo "Using .NET SDK:"
-dotnet --version
+"$DOTNET" --version
 
 # Add or modify solution paths here.
 SOLUTIONS=(
-    "CartService/CartService.sln"
-    "CatalogService/CatalogService.sln"
+    "LayeredArchitecture.slnx"
 )
 
 # These rules remain warnings in .editorconfig, but are treated as errors
@@ -33,17 +40,17 @@ for solution in "${SOLUTIONS[@]}"; do
 
     echo ""
     echo "Restoring $solution..."
-    dotnet restore "$solution" --nologo
+    "$DOTNET" restore "$solution" --nologo
 
     echo "Checking formatting for $solution..."
-    dotnet format "$solution" \
+    "$DOTNET" format "$solution" \
         --verify-no-changes \
         --severity info \
         --no-restore \
         --verbosity minimal
 
     echo "Checking analyzer rules for $solution..."
-    dotnet build "$solution" \
+    "$DOTNET" build "$solution" \
         --configuration Release \
         --no-restore \
         --nologo \

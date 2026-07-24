@@ -1,4 +1,3 @@
-﻿namespace CatalogService.Api.Contracts
-{
-    public record MoneyDto(decimal Amount, string Currency);
-}
+namespace CatalogService.Api.Contracts;
+
+public record MoneyDto(decimal Amount, string Currency);
