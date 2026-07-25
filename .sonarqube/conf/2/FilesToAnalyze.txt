@@ -1,0 +1,9 @@
+﻿C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\Abstractions\IIntegrationEventPublisher.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\Configuration\RabbitMqOptions.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\Contracts\ProductImageIntegrationModel.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\Contracts\ProductUpdatedIntegrationEvent.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\DependencyInjection\MessagingServiceCollectionExtensions.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\RabbitMQ\IRabbitMqConnectionProvider.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\RabbitMQ\RabbitMqConnectionProvider.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\RabbitMQ\RabbitMqIntegrationEventPublisher.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\Shared.Messaging\RabbitMQ\RabbitMqTopology.cs

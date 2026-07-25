@@ -1,0 +1,2 @@
+﻿C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.ConsoleApp\Program.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.ConsoleApp\appsettings.json

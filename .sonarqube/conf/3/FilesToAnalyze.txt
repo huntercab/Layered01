@@ -1,0 +1,10 @@
+﻿C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Class1.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Common\PagedResult.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\DependencyInjection.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Interfaces\ICatalogDbContext.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Interfaces\ICategoryRepository.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Interfaces\IProductRepository.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Products\UpdateProductCommand.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Products\UpdateProductCommandHandler.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Services\CategoryService.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Application\Services\ProductService.cs

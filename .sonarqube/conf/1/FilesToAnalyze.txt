@@ -1,0 +1,5 @@
+﻿C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Domain\Class1.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Domain\Entities\Category.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Domain\Entities\Product.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Domain\Outbox\OutboxMessage.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Domain\ValueObject\Money.cs

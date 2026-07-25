@@ -1,0 +1,16 @@
+﻿C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Contracts\CategoryContracts.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Contracts\LinkDto.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Contracts\MoneyDto.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Contracts\PagedResponse.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Contracts\ProductContracts.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Controllers\CategoriesController.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Controllers\ProductsController.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Program.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\obj\Debug\net10.0\CatalogService.Api.GlobalUsings.g.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\obj\Debug\net10.0\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\obj\Debug\net10.0\CatalogService.Api.AssemblyInfo.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\obj\Debug\net10.0\CatalogService.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\appsettings.Development.json
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\appsettings.json
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\CatalogService.Api.http
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Api\Properties\launchSettings.json

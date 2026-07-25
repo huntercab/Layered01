@@ -1,0 +1,12 @@
+﻿C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Class1.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Configuration\OutboxMessageConfiguration.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Data\CatalogDbContext.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\DependencyInjection.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Migrations\20260510011510_InitialCreate.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Migrations\20260510011510_InitialCreate.Designer.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Migrations\20260713034655_AddOutboxMessages.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Migrations\20260713034655_AddOutboxMessages.Designer.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Migrations\CatalogDbContextModelSnapshot.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Outbox\OutboxPublisherWorker.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Repositories\CategoryRepository.cs
+C:\Users\carlos_bonilla\Documents\EPAM\Courses\dotNET Mentoring Program Advanced Q1Q2 2026\CartService\CatalogService.Infrastructure\Repositories\ProductRepository.cs

@@ -17,6 +17,7 @@
     <Project Path="CatalogService.UnitTests/CatalogService.UnitTests.csproj" Id="ffcf66e6-51ca-4e46-9f5c-d50ad870990d" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path="compose.sonar.yml" />
     <File Path="Directory.Build.props" />
     <File Path="docker-compose.yml" />
   </Folder>
