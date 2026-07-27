@@ -17,9 +17,12 @@
     <Project Path="CatalogService.UnitTests/CatalogService.UnitTests.csproj" Id="ffcf66e6-51ca-4e46-9f5c-d50ad870990d" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path=".env" />
+    <File Path=".env.example" />
     <File Path="compose.sonar.yml" />
     <File Path="Directory.Build.props" />
     <File Path="docker-compose.yml" />
+    <File Path="test-compose.ps1" />
   </Folder>
   <Project Path="Shared.Messaging/Shared.Messaging.csproj" Id="bb547671-2542-4ec2-be89-4cab826d821b" />
   <Project Path="Shared/Shared.csproj" Id="25250ebf-2f59-4ee8-9931-59f2483a7228" />

@@ -17,11 +17,13 @@ public static class DependencyInjection
         {
             throw new ArgumentException("Connection String CatalogDb was not found", nameof(connectionString));
         }
+        //Remove this for container Sql DB
+        //var programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        //var databaseFolder = Path.Combine(programDataPath, "CatalogService", "Data");
 
-        var programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-        var databaseFolder = Path.Combine(programDataPath, "CatalogService", "Data");
-
-        Directory.CreateDirectory(databaseFolder);
+        //Directory.CreateDirectory(databaseFolder);
+        ////////////////////////////////////////////////
+        ///
 
         //var databaseFilePath = Path.Combine(databaseFolder, "CatalogServiceDb.mdf");
 

@@ -14,6 +14,7 @@ using Shared.Messaging.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddScoped<ICartService, CartService.Business.Services.CartService>();
 
@@ -104,6 +105,9 @@ builder.Services.AddAuthorization(options =>
         });
 
 var app = builder.Build();
+
+app.MapHealthChecks("/health")
+    .AllowAnonymous();
 
 if (app.Environment.IsDevelopment())
 {

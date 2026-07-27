@@ -2,8 +2,11 @@ using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using CatalogService.Application;
 using CatalogService.Infrastructure;
+using CatalogService.Infrastructure.Data;
 using CatalogService.Infrastructure.Outbox;
+using CatalogService.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi;
@@ -16,6 +19,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -96,6 +100,17 @@ builder.Services.AddAuthorization(options =>
 });
 
 var app = builder.Build();
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<CatalogDbContext>();
+
+    await dbContext.Database.MigrateAsync();
+}
+
+app.MapHealthChecks("/health")
+    .AllowAnonymous();
 
 var apiVersionDescriptionProvider =
     app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
